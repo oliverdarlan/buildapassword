@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PassForge — Free Password Generator</title>
+  <meta name="description" content="Generate strong, secure passwords and passphrases instantly. Free, client-side, and private — your passwords never leave your device." />
+  <link rel="canonical" href="https://www.passforge.com/" />
+
+  <meta property="og:title" content="PassForge — Free Password Generator" />
+  <meta property="og:description" content="Generate strong, secure passwords and passphrases instantly. Free, client-side, and private — your passwords never leave your device." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.passforge.com/" />
+  <meta property="og:site_name" content="PassForge" />
+  <meta property="og:image" content="https://www.passforge.com/og-image.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PassForge",
+    "description": "Generate strong, secure passwords and passphrases instantly. Free, client-side, and private — your passwords never leave your device.",
+    "url": "https://www.passforge.com/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+</head>
+<body>
+  <!-- Leaderboard ad slot -->
+  <aside class="ad-slot ad-leaderboard" aria-label="Advertisement">
+    <div class="ad-placeholder">
+      <span class="ad-label">Advertisement</span>
+      <span class="ad-size">728 × 90</span>
+    </div>
+  </aside>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="PassForge home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <span class="brand-name">PassForge</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="is-active">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <section class="generator card" aria-labelledby="generator-heading">
+      <h1 id="generator-heading" class="visually-hidden">Password Generator</h1>
+
+      <!-- Mode toggle -->
+      <div class="mode-toggle" role="tablist" aria-label="Generator mode">
+        <button type="button" class="mode-btn is-active" role="tab" aria-selected="true" data-mode="password" id="mode-password">Password</button>
+        <button type="button" class="mode-btn" role="tab" aria-selected="false" data-mode="passphrase" id="mode-passphrase">Passphrase</button>
+      </div>
+
+      <!-- Output -->
+      <div class="output">
+        <output id="output" class="output-text" aria-live="polite" aria-label="Generated password">click generate</output>
+        <div class="output-actions">
+          <button type="button" class="icon-btn" id="regenerate" aria-label="Regenerate">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"></path>
+              <path d="M20.49 15A9 9 0 0 1 5.64 18.36L1 14"></path>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn" id="copy" aria-label="Copy to clipboard">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Strength meter -->
+      <div class="strength" aria-live="polite">
+        <div class="strength-bar" aria-hidden="true">
+          <span class="strength-fill" id="strength-fill"></span>
+        </div>
+        <div class="strength-meta">
+          <span class="strength-label" id="strength-label">—</span>
+          <span class="strength-entropy" id="strength-entropy"></span>
+        </div>
+      </div>
+
+      <!-- Password options -->
+      <div class="options" id="password-options">
+        <div class="option-row">
+          <label for="length" class="option-label">
+            <span>Length</span>
+            <span class="option-value" id="length-value">16</span>
+          </label>
+          <input type="range" id="length" min="8" max="64" value="16" />
+        </div>
+
+        <fieldset class="checkbox-grid">
+          <legend class="visually-hidden">Character types</legend>
+          <label class="check">
+            <input type="checkbox" id="opt-upper" checked />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Uppercase (A–Z)</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="opt-lower" checked />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Lowercase (a–z)</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="opt-number" checked />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Numbers (0–9)</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="opt-symbol" />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Symbols (!@#$…)</span>
+          </label>
+        </fieldset>
+      </div>
+
+      <!-- Passphrase options -->
+      <div class="options is-hidden" id="passphrase-options">
+        <div class="option-row">
+          <label for="words" class="option-label">
+            <span>Number of words</span>
+            <span class="option-value" id="words-value">4</span>
+          </label>
+          <input type="range" id="words" min="3" max="10" value="4" />
+        </div>
+        <div class="option-row">
+          <label for="separator" class="option-label">
+            <span>Separator</span>
+          </label>
+          <select id="separator" class="select">
+            <option value="-" selected>Dash ( - )</option>
+            <option value=".">Period ( . )</option>
+            <option value="_">Underscore ( _ )</option>
+            <option value=" ">Space</option>
+          </select>
+        </div>
+        <fieldset class="checkbox-grid">
+          <legend class="visually-hidden">Passphrase options</legend>
+          <label class="check">
+            <input type="checkbox" id="pp-capitalize" checked />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Capitalize words</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="pp-number" />
+            <span class="check-box" aria-hidden="true"></span>
+            <span>Include a number</span>
+          </label>
+        </fieldset>
+      </div>
+
+      <button type="button" class="btn-primary" id="generate">Generate</button>
+    </section>
+
+    <aside class="sidebar">
+      <div class="ad-slot ad-rectangle" aria-label="Advertisement">
+        <div class="ad-placeholder">
+          <span class="ad-label">Advertisement</span>
+          <span class="ad-size">300 × 250</span>
+        </div>
+      </div>
+
+      <div class="card info">
+        <h2 class="info-title">How it works</h2>
+        <ul class="info-list">
+          <li>Generated entirely in your browser using <code>crypto.getRandomValues()</code>.</li>
+          <li>Nothing is sent to a server. Nothing is stored.</li>
+          <li>Strength is estimated from entropy (bits).</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <nav class="site-nav footer-nav" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 PassForge. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-live="polite">
+    <div class="cookie-banner-inner">
+      <p class="cookie-text">
+        We use cookies to improve your experience and to serve personalized ads via Google AdSense. See our <a href="privacy.html">Privacy Policy</a> for details.
+      </p>
+      <div class="cookie-actions">
+        <button type="button" class="btn-secondary" id="cookie-decline">Decline</button>
+        <button type="button" class="btn-primary" id="cookie-accept">Accept</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="cookie-consent.js"></script>
+</body>
+</html>
