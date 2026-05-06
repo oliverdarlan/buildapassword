@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "passforge.cookieConsent";
+  var STORAGE_KEY = "buildapassword.cookieConsent";
 
   function ready(fn) {
     if (document.readyState !== "loading") fn();
